@@ -19,3 +19,8 @@ target
 
 #Derby
 derby.log
+
+# Eclipse
+.classpath
+.project
+.settings
