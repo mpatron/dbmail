@@ -4,9 +4,9 @@
 
 	<groupId>org.jobjects</groupId>
 	<artifactId>mail</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
-	<name>Librairie d'importation de donnée  dans une base</name>
+	<name>Sendmail like senmail linux command but in java</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
