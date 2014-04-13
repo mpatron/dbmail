@@ -11,11 +11,6 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<compileSource>1.7</compileSource>
-		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
-		<!-- <persistence.persistence-unit.provider>org.hibernate.ejb.HibernatePersistence</persistence.persistence-unit.provider> -->
-		<persistence.persistence-unit.provider>org.eclipse.persistence.jpa.PersistenceProvider</persistence.persistence-unit.provider>
-		<!-- https://community.jboss.org/wiki/HowToAddRichFaces4xToMavenBasedProject -->
-		<org.richfaces.bom.version>4.2.0.Final</org.richfaces.bom.version>
 	</properties>
 
 	<repositories>
@@ -122,30 +117,9 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-			<groupId>org.testng</groupId>
-			<artifactId>testng</artifactId>
-			<version>6.3.1</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derby</artifactId>
-			<version>10.10.1.1</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyLocale_fr</artifactId>
-			<version>10.10.1.1</version>
-			<type>jar</type>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.derby</groupId>
-			<artifactId>derbyclient</artifactId>
-			<version>10.10.1.1</version>
-			<type>jar</type>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -164,118 +138,20 @@
 				</configuration>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<executions>
-					<execution>
-						<phase>test</phase>
-						<goals>
-							<goal>copy</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>${endorsed.dir}</outputDirectory>
-							<silent>true</silent>
-							<artifactItems>
-								<artifactItem>
-									<groupId>javax</groupId>
-									<artifactId>javaee-endorsed-api</artifactId>
-									<version>6.0</version>
-									<type>jar</type>
-								</artifactItem>
-							</artifactItems>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<groupId>org.apache.maven.plugins</groupId>
 				<version>2.10</version>
 				<configuration>
 					<argLine>-Xms128m -Xmx256m -XX:PermSize=128m -XX:MaxPermSize=256m</argLine>
-					<!-- <parallel>true</parallel> <forkMode>always</forkMode> -->
-					<suiteXmlFiles>
-						<suiteXmlFile>${basedir}/src/test/resources/testng.xml</suiteXmlFile>
-					</suiteXmlFiles>
 					<systemProperties>
 						<property>
 							<name>java.util.logging.config.file</name>
 							<value>${basedir}/src/test/resources/logging.properties</value>
 						</property>
-						<property>
-							<name>derby.stream.error.file</name>
-							<value>${basedir}/target/derby.log</value>
-						</property>
 					</systemProperties>
 				</configuration>
 			</plugin>
-			<plugin>
-				<artifactId>derby-maven-plugin</artifactId>
-				<groupId>org.carlspring.maven</groupId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<id>start</id>
-						<phase>generate-test-sources</phase>
-						<goals>
-							<goal>start</goal>
-							<!-- <goal>run</goal> -->
-						</goals>
-						<configuration>
-							<derby.fail.if.already.running>true</derby.fail.if.already.running>
-						</configuration>
-					</execution>
-					<execution>
-						<id>stop</id>
-						<!-- prepare-package -->
-						<phase>test</phase>
-						<goals>
-							<goal>stop</goal>
-						</goals>
-						<configuration>
-							<derby.fail.if.already.running>true</derby.fail.if.already.running>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
 		</plugins>
-		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings 
-					only. It has no influence on the Maven build itself. -->
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.carlspring.maven
-										</groupId>
-										<artifactId>
-											derby-maven-plugin
-										</artifactId>
-										<versionRange>
-											[1.7,)
-										</versionRange>
-										<goals>
-											<goal>run</goal>
-											<goal>start</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
 	</build>
 
 </project>
